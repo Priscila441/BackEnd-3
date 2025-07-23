@@ -2,6 +2,8 @@
 using Models.Entity;
 using Models.Entity.Dtos.Category;
 using Models.Entity.Dtos.Product;
+using Models.Entity.Dtos.CartDetailProduct;
+using Models.Entity.Dtos.Cart;
 
 namespace Models
 {
@@ -15,6 +17,11 @@ namespace Models
             CreateMap<Category, CategoryPostDto>();
             CreateMap<CategoryPostDto, Category>();
             CreateMap<CategoryPutDto, Category>();
+
+            CreateMap<CartDetailPostDto, CartDetailProduct>();
+            CreateMap<CartDetailProduct, CartDetailGetDto>();
+
+            CreateMap<Cart, CartGetDto>();
         }
 
     }

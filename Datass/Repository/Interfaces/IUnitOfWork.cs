@@ -11,6 +11,9 @@ namespace Datass.Repository.Interfaces
     {
         IGenericRepository<Product> Products { get; }
         IGenericRepository<Category> Categories { get; }
+        IGenericRepository<CartDetailProduct> CartDetails { get; }
+        ICartRepository Carts { get; }
+
         Task<int> SaveAsync();
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Datass.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,8 +48,7 @@ namespace Datass.Repository
         {           
             _dbSet.Remove(entity);
             await Task.CompletedTask;           
-        }
-
+        }        
 
     }
 }

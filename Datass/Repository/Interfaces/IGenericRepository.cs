@@ -1,5 +1,8 @@
 ﻿
 
+using Models.Entity;
+using System.Linq.Expressions;
+
 namespace Datass.Repository.Interfaces
 {
     public interface IGenericRepository<T> where T : class
@@ -9,5 +12,6 @@ namespace Datass.Repository.Interfaces
         Task AddAsync(T entity);
         Task Update(T entity);
         Task Delete(T entity);
+
     }
 }

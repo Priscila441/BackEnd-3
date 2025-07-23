@@ -38,7 +38,7 @@ namespace Datass
                 .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Cart>()
-                .HasMany(c => c.cartDetail)
+                .HasMany(c => c.CartDetail)
                 .WithOne(cd => cd.cart)
                 .HasForeignKey(cd => cd.CartId)
                 .OnDelete(DeleteBehavior.Cascade);
