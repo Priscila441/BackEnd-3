@@ -10,5 +10,6 @@ namespace Service.Interfaces
         Task<ProductGetDto> CreateAsync(ProductPostDto product);
         Task<bool> ChangeAsync(int id, ProductPutDto product);
         Task<bool> DeleteAsync(int id);
+        //cambiar el estado del producto cuando el valor del stock sea 0
     }
 }

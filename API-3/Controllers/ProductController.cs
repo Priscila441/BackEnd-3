@@ -31,7 +31,7 @@ namespace API_3.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductPutDto dto)
         {
             var success = await _productService.ChangeAsync(id, dto);
@@ -39,7 +39,7 @@ namespace API_3.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _productService.DeleteAsync(id);

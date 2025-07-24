@@ -10,6 +10,5 @@ namespace Models.Entity.Dtos.Category
         [Required]
         [StringLength(20)]
         public required string NameCategory { get; set; }
-        public List<ProductGetSimpleDto>? Products { get; set; }
     }
 }

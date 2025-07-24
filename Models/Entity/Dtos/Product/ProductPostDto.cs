@@ -27,9 +27,6 @@ namespace Models.Entity.Dtos.Product
         [Range(1, 10000)]
         public int Stock { get; set; }
 
-        [Column(TypeName = "nvarchar(20)")]
-        public StateProduct stateProduct { get; set; } = StateProduct.Available;
-
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
     }

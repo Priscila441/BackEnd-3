@@ -14,12 +14,13 @@ namespace Models
             CreateMap<ProductPostDto, Product>();
             CreateMap<ProductPutDto, Product>();
 
-            CreateMap<Category, CategoryPostDto>();
+            CreateMap<Category, CategoryGetDto>();
             CreateMap<CategoryPostDto, Category>();
             CreateMap<CategoryPutDto, Category>();
 
             CreateMap<CartDetailPostDto, CartDetailProduct>();
             CreateMap<CartDetailProduct, CartDetailGetDto>();
+            CreateMap<CartDetailProduct, CartDetailSimpleDto>();
 
             CreateMap<Cart, CartGetDto>();
         }
