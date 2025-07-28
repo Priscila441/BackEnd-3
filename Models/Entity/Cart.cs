@@ -13,5 +13,9 @@ namespace Models.Entity
         public decimal Total { get; set; }
         public bool IsActive { get; set; } = true;
         public List<CartDetailProduct> CartDetail { get; set; } = new List<CartDetailProduct>();
+
+        public void ReCalculateTotal() {
+            Total = CartDetail.Sum(cd => cd.SubTotal);
+        }
     }
 }

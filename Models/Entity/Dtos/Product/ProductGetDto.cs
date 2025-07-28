@@ -5,6 +5,7 @@ namespace Models.Entity.Dtos.Product
 {
     public class ProductGetDto
     {
+        public int IdProduct { get; set; }
         public required string NameProduct { get; set; }
         public string? Description { get; set; }
         public string? ImagesUrl { get; set; }

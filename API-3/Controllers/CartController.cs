@@ -13,9 +13,12 @@ namespace API_3.Controllers
             _cartService = cartService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll() => Ok(await _cartService.BringAllCarts());
+
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProductToCart([FromBody] CartDetailPostDto dto) {
-            var cart = await _cartService.addProductToCartAsync(dto);
+            var cart = await _cartService.AddProductToCartAsync(dto);
             return Ok(cart);
         }
     }

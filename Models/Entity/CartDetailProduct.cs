@@ -23,6 +23,9 @@ namespace Models.Entity
         public int CartId { get; set; }
         public Cart cart { get; set; } = null!;
 
+        public void ReCalculateSubTotal() {
+            SubTotal = Quantity * UnitPrice;
+        }
 
     }
 }

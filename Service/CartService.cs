@@ -20,38 +20,66 @@ namespace Service
             _mapper = mapper;
         }
 
-        public async Task<CartGetDto> addProductToCartAsync(CartDetailPostDto dto) {
-            //buscar carrito activo, si no hay lo crea
+        public async Task<CartGetDto> BringAllCarts() {
             var cart = await _unitOfWork.Carts.GetActiveCartAsync();
-            if (cart == null) 
+            if (cart == null) throw new ArgumentException("El carrito está vacío");
+            cart.ReCalculateTotal();
+            return _mapper.Map<CartGetDto>(cart);
+        }
+
+
+        public async Task<CartGetDto> AddProductToCartAsync(CartDetailPostDto dto)
+        {
+            // Buscar carrito activo, si no hay, lo crea
+            var cart = await _unitOfWork.Carts.GetActiveCartAsync();
+            if (cart == null)
             {
                 cart = new Cart { IsActive = true };
                 await _unitOfWork.Carts.AddAsync(cart);
-                await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync(); // Guardamos para que el carrito tenga Id y pueda asociarse al detalle
             }
 
-            //obtener producto
-            var product = await _unitOfWork.Products.GetByIdAsync(dto.ProductId) 
+            // Obtener producto
+            var product = await _unitOfWork.Products.GetByIdAsync(dto.ProductId)
                 ?? throw new ArgumentException("Producto no encontrado");
-            //si el producto ya está en el cartdetail entonces solo cambio la quantity con el post
-            //crear cartdetail con subtotal
-            var subtotal = product.Price * dto.Quantity;
-            var cartdetail = _mapper.Map<CartDetailProduct>(dto);
-            cartdetail.CartId = cart.IdCart;
-            cartdetail.SubTotal = subtotal;
 
-            await _unitOfWork.CartDetails.AddAsync(cartdetail);
+            // Buscar si ya existe ese producto en el cartdetail
+            var existingDetail = await _unitOfWork.CartDetails.GetByCartAndProductIdAsync(dto.ProductId, cart.IdCart);
 
-            //actualizar total
-            cart.Total += subtotal;
+            if (existingDetail != null)
+            {
+                // Si existe, actualizar cantidad y subtotal
+                existingDetail.Quantity += dto.Quantity;
+                existingDetail.UnitPrice = product.Price;
+                existingDetail.ReCalculateSubTotal();
+                
+                await _unitOfWork.CartDetails.Update(existingDetail);
+            }
+            else
+            {
+                // Si no existe, crear nuevo detalle
+                var subtotal = product.Price * dto.Quantity;
+                var cartdetail = _mapper.Map<CartDetailProduct>(dto);
+                cartdetail.CartId = cart.IdCart;
+                cartdetail.SubTotal = subtotal;
+
+                await _unitOfWork.CartDetails.AddAsync(cartdetail);
+                cart.CartDetail.Add(cartdetail);
+            }
+
+            // Volver a consultar el carrito con sus detalles para recalcular total
+            
             await _unitOfWork.Carts.Update(cart);
-
             await _unitOfWork.SaveAsync();
 
-            //return Cart-Dto con el detail incluido
-            var updateCart = await _unitOfWork.Carts.GetActiveCartAsync();
-            var result = _mapper.Map<CartGetDto>(updateCart);
+            // Devolver carrito actualizado
+            var result = _mapper.Map<CartGetDto>(cart);
             return result;
         }
+
+
+
+
     }
 }
+
