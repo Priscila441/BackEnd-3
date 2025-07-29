@@ -17,6 +17,8 @@ namespace Datass
 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartDetailProduct> CartDetailProducts{get; set;}
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,8 +28,7 @@ namespace Datass
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)
                 .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.stateProduct)
@@ -47,6 +48,17 @@ namespace Datass
                 .HasOne(cd => cd.product)
                 .WithMany()
                 .HasForeignKey(cd => cd.ProductId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.orders)
+                .WithOne(u => u.user)
+                .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.user)
+                .WithMany()
+                .HasForeignKey(o => o.UserId);
         }
 
     }

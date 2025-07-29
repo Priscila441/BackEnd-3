@@ -40,5 +40,18 @@ namespace Service
 
             return _mapper.Map<CartDetailGetDto>(cartDetailExist);
         }
+
+        public async Task DeleteCartDetail(int productId) {
+            var cartExist = await _unitOfWork.Carts.GetActiveCartAsync() ?? throw new ArgumentException("Carrito no encontrado");
+            var cartdetailExisting = await _unitOfWork.CartDetails.GetByCartAndProductIdAsync(productId, cartExist.IdCart) ?? throw new ArgumentException("Producto no encontrado");
+
+            await _unitOfWork.CartDetails.Delete(cartdetailExisting);
+            await _unitOfWork.SaveAsync();
+
+            cartExist.ReCalculateTotal();
+            await _unitOfWork.Carts.Update(cartExist);
+            await _unitOfWork.SaveAsync();
+        }
+
     }
 }

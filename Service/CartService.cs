@@ -6,6 +6,7 @@ using Models.Entity;
 
 
 using Service.Interfaces;
+using System.Reflection.Metadata.Ecma335;
 
 
 namespace Service
@@ -77,6 +78,14 @@ namespace Service
             return result;
         }
 
+        public async Task<bool> DeleteCart() {
+            var cartExist = await _unitOfWork.Carts.GetActiveCartAsync();
+                if (cartExist == null) return false;
+
+            await _unitOfWork.Carts.Delete(cartExist);
+            await _unitOfWork.SaveAsync();
+            return true;
+        }
 
 
 
