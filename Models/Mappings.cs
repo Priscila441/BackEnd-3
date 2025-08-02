@@ -4,6 +4,9 @@ using Models.Entity.Dtos.Category;
 using Models.Entity.Dtos.Product;
 using Models.Entity.Dtos.CartDetailProduct;
 using Models.Entity.Dtos.Cart;
+using Models.Entity.Dtos.User;
+using Models.Entity.Dtos.Order;
+using Models.Entity.Dtos.OrderDetail;
 
 namespace Models
 {
@@ -23,6 +26,15 @@ namespace Models
             CreateMap<CartDetailProduct, CartDetailSimpleDto>();
 
             CreateMap<Cart, CartGetDto>();
+
+            CreateMap<User, UserGetDto>();
+            CreateMap<UserPostDto, User>();
+            CreateMap<UserPutDto, User>();
+
+            CreateMap<Order, OrderGetDto>();
+            CreateMap<Order, OrderPatchPaymethod>();
+
+            CreateMap<OrderDetail, OrderDetailSimpleDto>();
         }
 
     }

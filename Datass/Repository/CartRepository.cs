@@ -13,6 +13,7 @@ namespace Datass.Repository
         {
             return await _context.Carts
                 .Include(c => c.CartDetail)
+                    .ThenInclude(cd => cd.Product)
                 .FirstOrDefaultAsync(static c => c.IsActive);
         }
     }

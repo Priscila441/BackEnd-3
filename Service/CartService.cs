@@ -23,7 +23,7 @@ namespace Service
 
         public async Task<CartGetDto> BringAllCarts() {
             var cart = await _unitOfWork.Carts.GetActiveCartAsync();
-            if (cart == null) throw new ArgumentException("El carrito está vacío");
+            if (cart == null) return null!;
             cart.ReCalculateTotal();
             return _mapper.Map<CartGetDto>(cart);
         }
@@ -65,7 +65,7 @@ namespace Service
                 cartdetail.SubTotal = subtotal;
 
                 await _unitOfWork.CartDetails.AddAsync(cartdetail);
-                cart.CartDetail.Add(cartdetail);
+
             }
 
             // Volver a consultar el carrito con sus detalles para recalcular total

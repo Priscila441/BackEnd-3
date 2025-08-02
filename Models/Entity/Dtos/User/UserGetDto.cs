@@ -1,4 +1,5 @@
-﻿using Models.Entity.Enums;
+﻿using Models.Entity.Dtos.OrderDetail;
+using Models.Entity.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Models.Entity.Dtos.User
         public int Age { get; set; }
         public required string Email { get; set; }
         public RoleUser Role { get; set; } = RoleUser.Invite;
-        public List<Order> orders { get; set; } = new List<Order>();
+        public List<OrderDetailSimpleDto> orders { get; set; } = new List<OrderDetailSimpleDto>();
 
     }
 }

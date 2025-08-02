@@ -17,11 +17,11 @@ namespace Models.Entity
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }
-        public Product product { get; set; } = null!;
+        public Product Product { get; set; } = null!;
 
         [ForeignKey("Cart")]
         public int CartId { get; set; }
-        public Cart cart { get; set; } = null!;
+        public Cart Cart { get; set; } = null!;
 
         public void ReCalculateSubTotal() {
             SubTotal = Quantity * UnitPrice;

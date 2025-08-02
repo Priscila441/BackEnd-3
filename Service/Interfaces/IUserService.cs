@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Models.Entity.Dtos.User;
 
 namespace Service.Interfaces
 {
-    public class IUserService
+    public interface IUserService
     {
+        
+        Task<IEnumerable<UserGetDto>> BringAllAsync();
+        Task<UserGetDto> BringOneAsync(int id);
+        Task<UserGetDto> CreateAsync(UserPostDto dto);
+        Task<bool> ChangeAsync(int id, UserPutDto dto);
+        Task<bool> DeleteAsync(int id);
+         
+        
     }
 }

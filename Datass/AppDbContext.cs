@@ -14,10 +14,10 @@ namespace Datass
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartDetailProduct> CartDetailProducts{get; set;}
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,25 +40,40 @@ namespace Datass
 
             modelBuilder.Entity<Cart>()
                 .HasMany(c => c.CartDetail)
-                .WithOne(cd => cd.cart)
+                .WithOne(cd => cd.Cart)
                 .HasForeignKey(cd => cd.CartId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CartDetailProduct>()
-                .HasOne(cd => cd.product)
+                .HasOne(cd => cd.Product)
                 .WithMany()
                 .HasForeignKey(cd => cd.ProductId);
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.orders)
-                .WithOne(u => u.user)
+                .HasMany(u => u.Orders)
+                .WithOne(u => u.User)
                 .HasForeignKey(u => u.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.user)
+                .HasOne(o => o.Cart)
                 .WithMany()
-                .HasForeignKey(o => o.UserId);
+                .HasForeignKey(o => o.CartID);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderDetails)
+                .WithOne(o => o.Order)
+                .HasForeignKey(o => o.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .Property(p => p.stateOrder)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Order>()
+                .Property(p => p.paymentMethod)
+                .HasConversion<string>();
+
         }
 
     }

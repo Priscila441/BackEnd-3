@@ -1,4 +1,3 @@
-
 using Datass;
 using Datass.Repository;
 using Datass.Repository.Interfaces;
@@ -6,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using Service;
 using Service.Interfaces;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,8 +30,15 @@ builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartDetailRepository, CartDetailRepository>();
 builder.Services.AddScoped<ICartDetailService, CartDetailService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderService, OrderService>();  
 builder.Services.AddScoped<IUserService, UserService>();
+
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 
 builder.Services.AddCors(options =>

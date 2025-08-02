@@ -4,6 +4,7 @@ using Datass;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datass.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250730160152_OrderDetail")]
+    partial class OrderDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,15 +110,14 @@ namespace Datass.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("paymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UserIdUser")
+                        .HasColumnType("int");
+
+                    b.Property<int>("paymentMethod")
+                        .HasColumnType("int");
 
                     b.Property<string>("stateOrder")
                         .IsRequired()
@@ -126,6 +128,8 @@ namespace Datass.Migrations
                     b.HasIndex("CartID");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserIdUser");
 
                     b.ToTable("Orders");
                 });
@@ -141,6 +145,9 @@ namespace Datass.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderIdOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -154,6 +161,8 @@ namespace Datass.Migrations
                     b.HasKey("IdOrderDetail");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderIdOrder");
 
                     b.ToTable("OrderDetails");
                 });
@@ -255,10 +264,14 @@ namespace Datass.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Entity.User", "User")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Models.Entity.User", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("UserIdUser");
 
                     b.Navigation("Cart");
 
@@ -268,10 +281,14 @@ namespace Datass.Migrations
             modelBuilder.Entity("Models.Entity.OrderDetail", b =>
                 {
                     b.HasOne("Models.Entity.Order", "Order")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Models.Entity.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderIdOrder");
 
                     b.Navigation("Order");
                 });

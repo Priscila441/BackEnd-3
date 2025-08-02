@@ -6,6 +6,9 @@ namespace Service.Interfaces
     public interface ICartService
     {
         Task<CartGetDto> BringAllCarts();
+
         Task<CartGetDto> AddProductToCartAsync(CartDetailPostDto dto);
+
+        Task<bool> DeleteCart();
     }
 }

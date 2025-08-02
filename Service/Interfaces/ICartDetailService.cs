@@ -10,6 +10,7 @@ namespace Service.Interfaces
     public interface ICartDetailService
     {
         Task<CartDetailGetDto> UpdateQuantityAsync(CartDetailPostDto dto);
+        Task DeleteCartDetail(int productId);
 
     }
 }

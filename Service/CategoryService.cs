@@ -17,16 +17,6 @@ namespace Service
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-        /*
-         Task<IEnumerable<CategoryGetDto>> BringAllAsync();
-        Task<CategoryGetDto> BringOneAsync(int id);
-        Task<CategoryGetDto> AddAsync(CategoryPostDto category);
-        Task<bool> UpdateAsync(int id, CategoryPutDto category);
-        Task<bool> DeleteAsync(int id);
-         
-         */
-
         public async Task<IEnumerable<CategoryGetDto>> BringAllAsync() {
             var categories = await _unitOfWork.Categories.GetAllAsync();
             if (categories == null) return null!;
