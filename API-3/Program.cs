@@ -43,14 +43,12 @@ builder.Services.AddControllers()
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+    options.AddPolicy("AllowAngular",
+        policy => policy
+            .WithOrigins("http://localhost:4200") // <--- dirección de tu frontend Angular
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
-
 
 var app = builder.Build();
 
@@ -61,9 +59,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
