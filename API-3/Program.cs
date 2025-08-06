@@ -43,9 +43,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
+    options.AddPolicy("AllowAll",
         policy => policy
-            .WithOrigins("http://localhost:4200") // <--- dirección de tu frontend Angular
+            .AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
@@ -61,7 +61,9 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
-app.UseCors("AllowAngular");
+app.UseRouting(); //necesario para controllers con atributos de ruta
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
