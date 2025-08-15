@@ -91,5 +91,13 @@ namespace Service
             await _unitOfWork.SaveAsync();
             return true;
         }
+
+        public async Task<UserGetDto?> ValidateUserAsync(string email, string password)
+        {
+            var user = await _unitOfWork.Users.ValidateCredentialsAsync(email, password);
+            if (user == null) return null;
+
+            return _mapper.Map<UserGetDto>(user);
+        }
     }
 }

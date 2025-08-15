@@ -10,9 +10,9 @@ namespace Datass.Repository
         public IGenericRepository<Category> Categories { get; }
         public ICartDetailRepository CartDetails { get; }
         public ICartRepository Carts { get; }
-        public IGenericRepository<User> Users { get; }
+        public IUserRepository Users { get; }
         public IGenericRepository<Order> Orders { get; }
-        public UnitOfWork(AppDbContext context, IGenericRepository<Product> productRepo, IGenericRepository<Category> categoryRepo, ICartDetailRepository cartDetailRepo, ICartRepository cartRepo , IGenericRepository<User> userRepo, IGenericRepository<Order> orderRepo) {
+        public UnitOfWork(AppDbContext context, IGenericRepository<Product> productRepo, IGenericRepository<Category> categoryRepo, ICartDetailRepository cartDetailRepo, ICartRepository cartRepo , IUserRepository  userRepo, IGenericRepository<Order> orderRepo) {
             _context = context;
             Products = productRepo;
             Categories = categoryRepo;

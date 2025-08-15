@@ -13,7 +13,7 @@ namespace Datass.Repository.Interfaces
         IGenericRepository<Category> Categories { get; }
         ICartDetailRepository CartDetails { get; }
         ICartRepository Carts { get; }
-        IGenericRepository<User> Users { get; }
+        IUserRepository Users { get; }
         IGenericRepository<Order> Orders { get; }
         Task<int> SaveAsync();
     }

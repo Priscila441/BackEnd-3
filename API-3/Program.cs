@@ -32,6 +32,7 @@ builder.Services.AddScoped<ICartDetailRepository, CartDetailRepository>();
 builder.Services.AddScoped<ICartDetailService, CartDetailService>();
 builder.Services.AddScoped<IOrderService, OrderService>();  
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 builder.Services.AddControllers()

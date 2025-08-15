@@ -9,6 +9,8 @@ namespace API_3.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        //ruta admin: IdUser	NameUser	Age	Email	Password	Role
+                      //1003	AdminUser	30	admin @mail.com  1234	2
 
         public UserController(IUserService userService)
         {
@@ -77,6 +79,16 @@ namespace API_3.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
+        {
+            var user = await _userService.ValidateUserAsync(dto.Email, dto.Password);
+            if (user == null) return Unauthorized("Credenciales inválidas");
+
+            return Ok(user); // Devuelve el UserGetDto con el rol, etc.
+        }
+
     }
 
 }

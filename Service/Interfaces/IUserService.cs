@@ -11,7 +11,9 @@ namespace Service.Interfaces
         Task<UserGetDto> CreateAsync(UserPostDto dto);
         Task<bool> ChangeAsync(int id, UserPutDto dto);
         Task<bool> DeleteAsync(int id);
-         
-        
+
+        Task<UserGetDto?> ValidateUserAsync(string email, string password);
+
+
     }
 }

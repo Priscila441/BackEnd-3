@@ -28,6 +28,7 @@ namespace Models
             CreateMap<Cart, CartGetDto>();
 
             CreateMap<User, UserGetDto>();
+            CreateMap<UserLoginDto, User>();
             CreateMap<UserPostDto, User>();
             CreateMap<UserPutDto, User>();
 
