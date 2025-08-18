@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Models.Entity.Dtos.User;
+using Service;
 using Service.Interfaces;
 
 namespace API_3.Controllers
@@ -10,11 +12,12 @@ namespace API_3.Controllers
     {
         private readonly IUserService _userService;
         //ruta admin: IdUser	NameUser	Age	Email	Password	Role
-                      //1003	AdminUser	30	admin @mail.com  1234	2
-
-        public UserController(IUserService userService)
+        //1003	AdminUser	30	admin @gmail.com  1234	0
+        private readonly JWTService _jwtService;
+        public UserController(IUserService userService, JWTService jwtService)
         {
             _userService = userService;
+            _jwtService = jwtService;
         }
 
         [HttpGet]
@@ -69,7 +72,7 @@ namespace API_3.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -86,7 +89,16 @@ namespace API_3.Controllers
             var user = await _userService.ValidateUserAsync(dto.Email, dto.Password);
             if (user == null) return Unauthorized("Credenciales inválidas");
 
-            return Ok(user); // Devuelve el UserGetDto con el rol, etc.
+            var token = _jwtService.GenerateToken(
+                user.IdUser.ToString(),
+                user.Email,
+                user.Role.ToString());
+
+            return Ok(new
+            {
+                Token = token,
+                User = user
+            });
         }
 
     }

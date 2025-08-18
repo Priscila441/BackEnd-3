@@ -11,7 +11,7 @@ namespace Service.Interfaces
     {
         Task<IEnumerable<OrderGetDto>> BringAllAsync();
         Task<OrderGetDto> BringOneAsync(int id);
-        Task<bool> CreateOrder(OrderPatchPaymethod dtoPay);
+        Task<bool> CreateOrder(int userId, OrderPatchPaymethod dtoPay);
         Task<bool> DeleteAsync(int id);
 
     }

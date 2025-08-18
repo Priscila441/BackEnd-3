@@ -13,7 +13,5 @@ namespace Models.Entity.Dtos.Order
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PaymentMethod PaymentMethod { get; set; }
 
-        public int UserId { get; set; }
-
     }
 }
