@@ -36,7 +36,7 @@ namespace Service
             return _mapper.Map<OrderGetDto>(order);
         }
 
-        public async Task<bool> CreateOrder(int userId, OrderPatchPaymethod dtoPay) {
+        public async Task<int> CreateOrder(int userId, OrderPatchPaymethod dtoPay) {
 
             var cartExist = await _unitOfWork.Carts.GetActiveCartAsync() ?? throw new ArgumentException("No existe ningún carrito activo");
 
@@ -68,7 +68,7 @@ namespace Service
 
             await _unitOfWork.Orders.AddAsync(order);
             await _unitOfWork.SaveAsync();
-            return true;
+            return order.IdOrder;
         }
 
         public async Task<bool> DeleteAsync(int id) {

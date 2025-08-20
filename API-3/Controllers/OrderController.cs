@@ -45,21 +45,21 @@ namespace API_3.Controllers
         {
             try
             {
-                // Extraer userId desde el token
                 var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (string.IsNullOrEmpty(userIdClaim))
                     return Unauthorized("No se pudo obtener el usuario del token.");
 
                 var userId = int.Parse(userIdClaim);
 
-                var result = await _service.CreateOrder(userId, dtoPay);
+                var orderId = await _service.CreateOrder(userId, dtoPay);
 
-                if (result)
-                    return Ok(new { mensaje = "Orden creada exitosamente" });
-                else
-                    return BadRequest("No se pudo crear la orden");
+                return Ok(new { mensaje = "Orden creada exitosamente", idOrder = orderId });
             }
             catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
             {
                 return BadRequest(new { mensaje = ex.Message });
             }

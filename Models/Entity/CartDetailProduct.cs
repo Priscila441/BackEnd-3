@@ -17,6 +17,7 @@ namespace Models.Entity
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }
+
         public Product Product { get; set; } = null!;
 
         [ForeignKey("Cart")]

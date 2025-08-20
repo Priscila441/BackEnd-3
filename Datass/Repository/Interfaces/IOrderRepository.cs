@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Datass.Repository.Interfaces
 {
-    internal class IOrderRepository
+    public class IOrderRepository
     {
     }
 }

@@ -9,7 +9,7 @@ namespace Models.Entity.Dtos.OrderDetail
 {
     public class OrderDetailSimpleDto
     {
-        public required string ProductName { get; set; }
+        public string? ProductName { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal SubTotal => UnitPrice * Quantity;

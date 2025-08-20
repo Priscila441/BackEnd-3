@@ -9,7 +9,7 @@ namespace Models.Entity
     {
         [Key]
         public int IdOrderDetail { get; set; }
-        public required string ProductName { get; set; }
+        public string? ProductName { get; set; }
         public int Quantity { get; set; }
 
         [Column(TypeName = "decimal(8,2)")]
