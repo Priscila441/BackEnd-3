@@ -18,12 +18,9 @@ namespace API_3.Controllers
         public async Task<IActionResult> GetActiveCart()
         {
             var cart = await _cartService.BringAllCarts();
-            if (cart == null)
-                return NotFound("No hay ningún carrito activo.");
-
+          
             return Ok(cart);
         }
-
 
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProductToCart([FromBody] CartDetailPostDto dto) {
@@ -43,9 +40,12 @@ namespace API_3.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteCart() {
+        public async Task<IActionResult> DeleteCart()
+        {
             var success = await _cartService.DeleteCart();
-            return success ? Ok() : NotFound("No hay ningún carrito activo.");
+            // Devolvemos 200 siempre, con info de si se eliminó o no
+            return Ok(new { deleted = success });
         }
+
     }
 }
